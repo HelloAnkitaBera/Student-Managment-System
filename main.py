@@ -1,10 +1,21 @@
+import json
+
 students = []
+
 
 def add_student():
     roll = int(input("Enter Roll Number: "))
+
+    # Check for duplicate roll number
+    for student in students:
+        if student["roll"] == roll:
+            print("Error: Roll Number already exists!")
+            return
+
     name = input("Enter Name: ")
     age = int(input("Enter Age: "))
     student_class = input("Enter Class: ")
+    gender = input("Enter Gender (Male/Female): ")
     marks = float(input("Enter Marks: "))
 
     student = {
@@ -12,6 +23,7 @@ def add_student():
         "name": name,
         "age": age,
         "class": student_class,
+        "gender": gender,
         "marks": marks
     }
 
@@ -19,26 +31,64 @@ def add_student():
 
     print("Student Added Successfully!")
 
+
 def view_students():
     if not students:
         print("No students found.")
         return
 
+    print(f"\nTotal Students: {len(students)}")
+
+    print("-" * 80)
+    print(f"{'Roll':<10}{'Name':<15}{'Age':<10}{'Class':<10}{'Gender':<15}{'Marks':<10}")
+    print("-" * 80)
+
     for student in students:
-        print(student)
+        print(
+            f"{student['roll']:<10}"
+            f"{student['name']:<15}"
+            f"{student['age']:<10}"
+            f"{student['class']:<10}"
+            f"{student.get('gender', 'N/A'):<15}"
+            f"{student['marks']:<10}"
+        )
+
+    print("-" * 80)
+
 
 def search_student():
-    roll = int(input("Enter Roll Number: "))
+    keyword = input("Enter Roll Number or Name: ")
+
+    found = False
+
+    print("\nSearch Results")
+    print("-" * 80)
+    print(f"{'Roll':<10}{'Name':<15}{'Age':<10}{'Class':<10}{'Gender':<15}{'Marks':<10}")
+    print("-" * 80)
 
     for student in students:
-        if student["roll"] == roll:
-            print(student)
-            return
+        if (keyword.isdigit() and student["roll"] == int(keyword)) or \
+           (keyword.lower() in student["name"].lower()):
 
-    print("Student Not Found!")
+            print(
+                f"{student['roll']:<10}"
+                f"{student['name']:<15}"
+                f"{student['age']:<10}"
+                f"{student['class']:<10}"
+                f"{student.get('gender', 'N/A'):<15}"
+                f"{student['marks']:<10}"
+            )
+
+            found = True
+
+    if found:
+        print("-" * 80)
+    else:
+        print("Student Not Found!")
+
 
 def update_student():
-    roll = int(input("Enter Roll Number: "))
+    roll = int(input("Enter Roll Number to Update: "))
 
     for student in students:
         if student["roll"] == roll:
@@ -46,15 +96,17 @@ def update_student():
             student["name"] = input("New Name: ")
             student["age"] = int(input("New Age: "))
             student["class"] = input("New Class: ")
+            student["gender"] = input("New Gender: ")
             student["marks"] = float(input("New Marks: "))
 
-            print("Updated Successfully!")
+            print("Student Updated Successfully!")
             return
 
     print("Student Not Found!")
 
+
 def delete_student():
-    roll = int(input("Enter Roll Number: "))
+    roll = int(input("Enter Roll Number to Delete: "))
 
     for student in students:
         if student["roll"] == roll:
@@ -64,7 +116,6 @@ def delete_student():
 
     print("Student Not Found!")
 
-import json
 
 def save_data():
     with open("students.json", "w") as file:
@@ -72,7 +123,6 @@ def save_data():
 
     print("Data Saved Successfully!")
 
-import json
 
 def load_data():
     global students
@@ -84,6 +134,7 @@ def load_data():
     except FileNotFoundError:
         students = []
 
+
 def menu():
     print("\n===== STUDENT MANAGEMENT SYSTEM =====")
     print("1. Add Student")
@@ -94,7 +145,6 @@ def menu():
     print("6. Save Data")
     print("7. Exit")
 
-students = []
 
 load_data()
 
