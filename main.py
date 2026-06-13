@@ -93,11 +93,49 @@ def update_student():
     for student in students:
         if student["roll"] == roll:
 
-            student["name"] = input("New Name: ")
-            student["age"] = int(input("New Age: "))
-            student["class"] = input("New Class: ")
-            student["gender"] = input("New Gender: ")
-            student["marks"] = float(input("New Marks: "))
+            print("\nCurrent Student Details")
+            print("-" * 80)
+            print(f"{'Roll':<10}{'Name':<15}{'Age':<10}{'Class':<10}{'Gender':<15}{'Marks':<10}")
+            print("-" * 80)
+
+            print(
+                f"{student['roll']:<10}"
+                f"{student['name']:<15}"
+                f"{student['age']:<10}"
+                f"{student['class']:<10}"
+                f"{student.get('gender', 'N/A'):<15}"
+                f"{student['marks']:<10}"
+            )
+
+            print("-" * 80)
+
+            print("\nWhat do you want to update?")
+            print("1. Name")
+            print("2. Age")
+            print("3. Class")
+            print("4. Gender")
+            print("5. Marks")
+
+            choice = input("Enter Choice: ")
+
+            if choice == "1":
+                student["name"] = input("Enter New Name: ")
+
+            elif choice == "2":
+                student["age"] = int(input("Enter New Age: "))
+
+            elif choice == "3":
+                student["class"] = input("Enter New Class: ")
+
+            elif choice == "4":
+                student["gender"] = input("Enter New Gender: ")
+
+            elif choice == "5":
+                student["marks"] = float(input("Enter New Marks: "))
+
+            else:
+                print("Invalid Choice!")
+                return
 
             print("Student Updated Successfully!")
             return
