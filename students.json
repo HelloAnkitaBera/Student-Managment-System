@@ -4,13 +4,23 @@
         "name": "Ranit",
         "age": 26,
         "class": "12",
-        "marks": 89.0
+        "marks": 89.0,
+        "gender": "Male"
     },
     {
         "roll": 1,
-        "name": "Ankita",
+        "name": "Abantika",
         "age": 20,
         "class": "5",
-        "marks": 67.0
+        "marks": 67.0,
+        "gender": "Female"
+    },
+    {
+        "roll": 3,
+        "name": "Anu",
+        "age": 20,
+        "class": "12",
+        "gender": "Female",
+        "marks": 93.0
     }
 ]

@@ -28,7 +28,6 @@ def add_student():
     }
 
     students.append(student)
-
     print("Student Added Successfully!")
 
 
@@ -45,38 +44,40 @@ def view_students():
 
     for student in students:
         print(
-            f"{student['roll']:<10}"
-            f"{student['name']:<15}"
-            f"{student['age']:<10}"
-            f"{student['class']:<10}"
+            f"{student.get('roll', 'N/A'):<10}"
+            f"{student.get('name', 'N/A'):<15}"
+            f"{student.get('age', 'N/A'):<10}"
+            f"{student.get('class', 'N/A'):<10}"
             f"{student.get('gender', 'N/A'):<15}"
-            f"{student['marks']:<10}"
+            f"{student.get('marks', 'N/A'):<10}"
         )
 
     print("-" * 80)
 
 
 def search_student():
-    keyword = input("Enter Roll Number or Name: ")
+    keyword = input("Enter Name/Roll No: ")
 
     found = False
 
-    print("\nSearch Results")
-    print("-" * 80)
-    print(f"{'Roll':<10}{'Name':<15}{'Age':<10}{'Class':<10}{'Gender':<15}{'Marks':<10}")
-    print("-" * 80)
-
     for student in students:
+
         if (keyword.isdigit() and student["roll"] == int(keyword)) or \
            (keyword.lower() in student["name"].lower()):
 
+            if not found:
+                print("\nStudent Found")
+                print("-" * 80)
+                print(f"{'Roll':<10}{'Name':<15}{'Age':<10}{'Class':<10}{'Gender':<15}{'Marks':<10}")
+                print("-" * 80)
+
             print(
-                f"{student['roll']:<10}"
-                f"{student['name']:<15}"
-                f"{student['age']:<10}"
-                f"{student['class']:<10}"
+                f"{student.get('roll', 'N/A'):<10}"
+                f"{student.get('name', 'N/A'):<15}"
+                f"{student.get('age', 'N/A'):<10}"
+                f"{student.get('class', 'N/A'):<10}"
                 f"{student.get('gender', 'N/A'):<15}"
-                f"{student['marks']:<10}"
+                f"{student.get('marks', 'N/A'):<10}"
             )
 
             found = True
@@ -99,12 +100,12 @@ def update_student():
             print("-" * 80)
 
             print(
-                f"{student['roll']:<10}"
-                f"{student['name']:<15}"
-                f"{student['age']:<10}"
-                f"{student['class']:<10}"
+                f"{student.get('roll', 'N/A'):<10}"
+                f"{student.get('name', 'N/A'):<15}"
+                f"{student.get('age', 'N/A'):<10}"
+                f"{student.get('class', 'N/A'):<10}"
                 f"{student.get('gender', 'N/A'):<15}"
-                f"{student['marks']:<10}"
+                f"{student.get('marks', 'N/A'):<10}"
             )
 
             print("-" * 80)
@@ -168,6 +169,10 @@ def load_data():
     try:
         with open("students.json", "r") as file:
             students = json.load(file)
+
+        # Fix old records that don't have gender
+        for student in students:
+            student.setdefault("gender", "N/A")
 
     except FileNotFoundError:
         students = []
