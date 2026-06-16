@@ -149,8 +149,31 @@ def delete_student():
 
     for student in students:
         if student["roll"] == roll:
-            students.remove(student)
-            print("Student Deleted Successfully!")
+
+            print("\nStudent to be Deleted")
+            print("-" * 80)
+            print(f"{'Roll':<10}{'Name':<15}{'Age':<10}{'Class':<10}{'Gender':<15}{'Marks':<10}")
+            print("-" * 80)
+
+            print(
+                f"{student.get('roll', 'N/A'):<10}"
+                f"{student.get('name', 'N/A'):<15}"
+                f"{student.get('age', 'N/A'):<10}"
+                f"{student.get('class', 'N/A'):<10}"
+                f"{student.get('gender', 'N/A'):<15}"
+                f"{student.get('marks', 'N/A'):<10}"
+            )
+
+            print("-" * 80)
+
+            confirm = input("Are you sure? (Y/N): ").upper()
+
+            if confirm == "Y":
+                students.remove(student)
+                print("Student Deleted Successfully!")
+            else:
+                print("Deletion Cancelled!")
+
             return
 
     print("Student Not Found!")
