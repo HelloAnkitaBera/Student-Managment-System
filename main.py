@@ -1,10 +1,95 @@
 import json
 
 students = []
+update_count = 0
+
+
+def get_valid_name():
+    while True:
+        name = input("Enter Name: ").strip()
+
+        if not name:
+            print("Name cannot be empty!")
+            continue
+
+        if any(char.isdigit() for char in name):
+            print("Name cannot contain digits!")
+            continue
+
+        return name
+ 
+    
+
+def get_valid_roll():
+    while True:
+        try:
+            roll = int(input("Enter Roll Number: "))
+
+            if roll <= 0:
+                print("Roll Number must be greater than 0!")
+            else:
+                return roll
+
+        except ValueError:
+            print("Invalid Roll Number!")
+
+
+
+def get_valid_age():
+    while True:
+        try:
+            age = int(input("Enter Age: "))
+
+            if 18 <= age <= 60:
+                return age
+            else:
+                print("Age must be between 18 and 60!")
+
+        except ValueError:
+            print("Invalid Age!")
+
+
+
+def get_valid_marks():
+    while True:
+        try:
+            marks = float(input("Enter Marks: "))
+
+            if 0 <= marks <= 100:
+                return marks
+            else:
+                print("Marks must be between 0 and 100!")
+
+        except ValueError:
+            print("Invalid Marks!")
+
+
+
+def get_valid_int(prompt):
+    while True:
+        try:
+            value = int(input(prompt))
+            if value <= 0:
+                print("Value must be greater than 0!")
+            else:
+                return value
+        except ValueError:
+            print("Invalid Input!")
+
+
+
+def get_valid_float(prompt):
+    while True:
+        try:
+            value = float(input(prompt))
+            return value
+        except ValueError:
+            print("Invalid Input!")
+
 
 
 def add_student():
-    roll = int(input("Enter Roll Number: "))
+    roll = get_valid_int("Enter Roll Number: ")
 
     # Check for duplicate roll number
     for student in students:
@@ -12,11 +97,11 @@ def add_student():
             print("Error: Roll Number already exists!")
             return
 
-    name = input("Enter Name: ")
-    age = int(input("Enter Age: "))
+    name = get_valid_name()
+    age = get_valid_age()
     student_class = input("Enter Class: ")
     gender = input("Enter Gender (Male/Female): ")
-    marks = float(input("Enter Marks: "))
+    marks = get_valid_marks()
 
     student = {
         "roll": roll,
@@ -29,6 +114,7 @@ def add_student():
 
     students.append(student)
     print("Student Added Successfully!")
+
 
 
 def view_students():
@@ -53,6 +139,7 @@ def view_students():
         )
 
     print("-" * 80)
+
 
 
 def search_student():
@@ -88,8 +175,10 @@ def search_student():
         print("Student Not Found!")
 
 
+
 def update_student():
-    roll = int(input("Enter Roll Number to Update: "))
+    global update_count
+    roll = get_valid_int("Enter Roll Number to Update: ")
 
     for student in students:
         if student["roll"] == roll:
@@ -120,88 +209,126 @@ def update_student():
             choice = input("Enter Choice: ")
 
             if choice == "1":
-                student["name"] = input("Enter New Name: ")
-
+                student["name"] = get_valid_name()
             elif choice == "2":
-                student["age"] = int(input("Enter New Age: "))
-
+                student["age"] = get_valid_age()
             elif choice == "3":
                 student["class"] = input("Enter New Class: ")
-
             elif choice == "4":
                 student["gender"] = input("Enter New Gender: ")
-
             elif choice == "5":
-                student["marks"] = float(input("Enter New Marks: "))
-
+                student["marks"] = get_valid_marks()
             else:
                 print("Invalid Choice!")
                 return
 
-            print("Student Updated Successfully!")
-            return
-
-    print("Student Not Found!")
-
-
-def delete_student():
-    roll = int(input("Enter Roll Number to Delete: "))
-
-    for student in students:
-        if student["roll"] == roll:
-
-            print("\nStudent to be Deleted")
-            print("-" * 80)
-            print(f"{'Roll':<10}{'Name':<15}{'Age':<10}{'Class':<10}{'Gender':<15}{'Marks':<10}")
-            print("-" * 80)
-
-            print(
-                f"{student.get('roll', 'N/A'):<10}"
-                f"{student.get('name', 'N/A'):<15}"
-                f"{student.get('age', 'N/A'):<10}"
-                f"{student.get('class', 'N/A'):<10}"
-                f"{student.get('gender', 'N/A'):<15}"
-                f"{student.get('marks', 'N/A'):<10}"
-            )
-
-            print("-" * 80)
-
-            confirm = input("Are you sure? (Y/N): ").upper()
+            confirm = input("Save Changes? (Y/N): ").upper()
 
             if confirm == "Y":
-                students.remove(student)
-                print("Student Deleted Successfully!")
+                update_count += 1
+                print("Student Updated Successfully!")
+                return
             else:
-                print("Deletion Cancelled!")
-
-            return
+                print("Update Cancelled!")
+                return
 
     print("Student Not Found!")
+    return
 
 
-def save_data():
-    with open("students.json", "w") as file:
-        json.dump(students, file, indent=4)
+def calculate_grade(marks):
 
-    print("Data Saved Successfully!")
+    if marks >= 90:
+        return "A+"
+
+    elif marks >= 80:
+        return "A"
+
+    elif marks >= 70:
+        return "B"
+
+    elif marks >= 60:
+        return "C"
+
+    else:
+        return "D"
 
 
 def load_data():
     global students
-
     try:
-        with open("students.json", "r") as file:
-            students = json.load(file)
-
-        # Fix old records that don't have gender
-        for student in students:
-            student.setdefault("gender", "N/A")
-
+        with open('students.json', 'r') as f:
+            students = json.load(f)
     except FileNotFoundError:
         students = []
 
 
-def menu():
+def save_data():
+    with open('students.json', 'w') as f:
+        json.dump(students, f, indent=4)
+
+
+def delete_student():
+    roll = get_valid_int("Enter Roll Number to Delete: ")
+    for i, student in enumerate(students):
+        if student.get('roll') == roll:
+            del students[i]
+            print("Student Deleted Successfully!")
+            return
+    print("Student Not Found!")
+
+def display_update_count():
+    print(f"\nTotal Updates: {update_count}")
+
+
+def display_statistics():
+
+    if not students:
+        print("No students found.")
+        return
+
+    marks_list = [student["marks"] for student in students]
+
+    total_students = len(students)
+    highest_marks = max(marks_list)
+    lowest_marks = min(marks_list)
+    average_marks = sum(marks_list) / total_students
+
+    print("\n===== STUDENT STATISTICS =====")
+    print(f"Total Students : {total_students}")
+    print(f"Highest Marks  : {highest_marks}")
+    print(f"Lowest Marks   : {lowest_marks}")
+    print(f"Average Marks  : {average_marks:.2f}")
+
+
+
+def student_report():
+
+    roll = get_valid_int("Enter Roll Number: ")
+
+    for student in students:
+
+        if student["roll"] == roll:
+
+            grade = calculate_grade(student["marks"])
+
+            print("\n--------------------------------")
+            print("Student Report")
+            print("--------------------------------")
+            print(f"Roll Number : {student['roll']}")
+            print(f"Name        : {student['name']}")
+            print(f"Class       : {student['class']}")
+            print(f"Marks       : {student['marks']}")
+            print(f"Gender      : {student['gender']}")
+            print(f"Grade       : {grade}")
+            print("--------------------------------")
+
+            return
+
+    print("Student Not Found!")
+
+
+def student_menu():
     print("\n===== STUDENT MANAGEMENT SYSTEM =====")
     print("1. Add Student")
     print("2. View Students")
@@ -209,14 +336,16 @@ def menu():
     print("4. Update Student")
     print("5. Delete Student")
     print("6. Save Data")
-    print("7. Exit")
+    print("7. Display Update Count")
+    print("8. Display Statistics")
+    print("9. Student Report Card")
+    print("10. Exit")
 
 
 load_data()
 
 while True:
-
-    menu()
+    student_menu()
 
     choice = input("Enter Choice: ")
 
@@ -239,7 +368,16 @@ while True:
         save_data()
 
     elif choice == "7":
-        save_data()
+         display_update_count()
+
+    elif choice == "8":
+       display_statistics()
+
+    elif choice == "9":
+        student_report()
+
+    elif choice == "10":
+        
         print("Goodbye!")
         break
 

@@ -2,7 +2,7 @@
     {
         "roll": 2,
         "name": "Ranit",
-        "age": 26,
+        "age": 21,
         "class": "12",
         "marks": 89.0,
         "gender": "Male"
@@ -19,7 +19,7 @@
         "roll": 3,
         "name": "Anu",
         "age": 20,
-        "class": "12",
+        "class": "10",
         "gender": "Female",
         "marks": 93.0
     },
@@ -30,5 +30,13 @@
         "class": "12",
         "gender": "Female",
         "marks": 89.0
+    },
+    {
+        "roll": 6,
+        "name": "Lisa",
+        "age": 22,
+        "class": "12",
+        "gender": "Female",
+        "marks": 94.0
     }
 ]
