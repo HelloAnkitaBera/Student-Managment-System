@@ -113,6 +113,7 @@ def add_student():
     }
 
     students.append(student)
+    save_data()
     print("Student Added Successfully!")
 
 
@@ -226,6 +227,7 @@ def update_student():
 
             if confirm == "Y":
                 update_count += 1
+                save_data()
                 print("Student Updated Successfully!")
                 return
             else:
@@ -273,6 +275,7 @@ def delete_student():
     for i, student in enumerate(students):
         if student.get('roll') == roll:
             del students[i]
+            save_data()
             print("Student Deleted Successfully!")
             return
     print("Student Not Found!")
@@ -377,7 +380,7 @@ while True:
         student_report()
 
     elif choice == "10":
-        
+        save_data()
         print("Goodbye!")
         break
 
