@@ -1,3 +1,3 @@
 STUDENT MANAGMENT SYSTEM
-Written by 
+  Written by 
    - Ankita Bera
