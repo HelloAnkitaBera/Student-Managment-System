@@ -54,5 +54,13 @@
         "class": "12",
         "gender": "Female",
         "marks": 86.0
+    },
+    {
+        "roll": 8,
+        "name": "Prantik",
+        "age": 23,
+        "class": "2nd year",
+        "gender": "Male",
+        "marks": 98.0
     }
 ]
