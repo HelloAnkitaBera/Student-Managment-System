@@ -1,4 +1,8 @@
 import json
+import os
+import shutil
+import csv
+from datetime import datetime
 
 students = []
 update_count = 0
@@ -104,13 +108,14 @@ def add_student():
     marks = get_valid_marks()
 
     student = {
-        "roll": roll,
-        "name": name,
-        "age": age,
-        "class": student_class,
-        "gender": gender,
-        "marks": marks
-    }
+    "roll": roll,
+    "name": name,
+    "age": age,
+    "class": student_class,
+    "gender": gender,
+    "marks": marks,
+    "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+}
 
     students.append(student)
     save_data()
@@ -125,9 +130,9 @@ def view_students():
 
     print(f"\nTotal Students: {len(students)}")
 
-    print("-" * 80)
-    print(f"{'Roll':<10}{'Name':<15}{'Age':<10}{'Class':<10}{'Gender':<15}{'Marks':<10}")
-    print("-" * 80)
+    print("-" * 110)
+    print(f"{'Roll':<10}{'Name':<15}{'Age':<10}{'Class':<10}{'Gender':<15}{'Marks':<10}{'Created At':<30}")
+    print("-" * 110)
 
     for student in students:
         print(
@@ -137,6 +142,7 @@ def view_students():
             f"{student.get('class', 'N/A'):<10}"
             f"{student.get('gender', 'N/A'):<15}"
             f"{student.get('marks', 'N/A'):<10}"
+            f"{student.get('created_at', 'N/A'):<30}"
         )
 
     print("-" * 80)
@@ -286,6 +292,147 @@ def save_data():
     with open('students.json', 'w') as f:
         json.dump(students, f, indent=4)
 
+def export_backup():
+    try:
+        shutil.copy(
+            "students.json",
+            "students_backup.json"
+        )
+
+        print(
+            "Backup Created Successfully."
+        )
+    except FileNotFoundError:
+        print(
+            "No Data File Found For Backup."
+        )
+
+
+def export_csv():
+
+    if not students:
+        print("No students found.")
+        return
+
+    with open(
+        "students.csv",
+        "w",
+        newline=""
+    ) as file:
+
+        writer = csv.writer(file)
+
+        writer.writerow(
+            ["Roll", "Name", "Age", "Class", "Gender", "Marks"]
+        )
+
+        for student in students:
+
+            writer.writerow([
+                student["roll"],
+                student["name"],
+                student["age"],
+                student["class"],
+                student["gender"],
+                student["marks"]
+            ])
+
+    print(
+        "CSV Exported Successfully."
+    )
+
+
+def import_backup():
+
+    global students
+
+    try:
+
+        with open(
+            "students_backup.json",
+            "r"
+        ) as file:
+
+            students = json.load(file)
+
+        save_data()
+
+        print(
+            "Backup Restored Successfully."
+        )
+
+    except FileNotFoundError:
+
+        print(
+            "Backup File Not Found."
+        )
+
+    except json.JSONDecodeError:
+
+        print(
+            "Backup File Corrupted."
+        )
+
+def display_file_size():
+
+    try:
+
+        size = os.path.getsize(
+            "students.json"
+        )
+
+        size_kb = size / 1024
+
+        print(
+            f"Data File Size: {size_kb:.2f} KB"
+        )
+
+    except FileNotFoundError:
+
+        print(
+            "Data File Not Found."
+        )
+
+def create_auto_backup():
+
+    try:
+
+        shutil.copy(
+            "students.json",
+            "students_backup.json"
+        )
+
+        print(
+            "Automatic Backup Created."
+        )
+
+    except FileNotFoundError:
+
+        print(
+            "No Data File Found For Backup."
+        )
+
+def display_last_backup_time():
+
+    try:
+
+        timestamp = os.path.getmtime(
+            "students_backup.json"
+        )
+
+        backup_time = datetime.fromtimestamp(
+            timestamp
+        )
+
+        print(
+            f"Last Backup Time: {backup_time.strftime('%Y-%m-%d %H:%M:%S')}"
+        )
+
+    except FileNotFoundError:
+
+        print(
+            "Backup File Not Found."
+        )
 
 def delete_student():
     roll = get_valid_int("Enter Roll Number to Delete: ")
@@ -359,8 +506,16 @@ def student_menu():
     print("7. Display Update Count")
     print("8. Display Statistics")
     print("9. Student Report Card")
-    print("10. Exit")
+    print("10. Backup Data")
+    print("11. Import Backup")
+    print("12. Display File Size")
+    print("13. Last Backup Time")
+    print("14. Export CSV")
+    print("15. Exit")
 
+
+
+create_auto_backup()
 
 load_data()
 
@@ -388,18 +543,34 @@ while True:
         save_data()
 
     elif choice == "7":
-         display_update_count()
+        display_update_count()
 
     elif choice == "8":
-       display_statistics()
+        display_statistics()
 
     elif choice == "9":
         student_report()
 
     elif choice == "10":
+        export_backup()
+
+    elif choice == "11":
+        import_backup()
+
+    elif choice == "12":
+        display_file_size()
+
+    elif choice == "13":
+        display_last_backup_time()
+
+    elif choice == "14":
+        export_csv()
+
+    elif choice == "15":
         save_data()
-        print("Goodbye!")
+        print("Thank you for using the Student Management System.")
         break
+    
 
     else:
         print("Invalid Choice!")
