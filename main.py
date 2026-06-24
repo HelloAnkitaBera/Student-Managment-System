@@ -259,10 +259,27 @@ def calculate_grade(marks):
 def load_data():
     global students
     try:
-        with open('students.json', 'r') as f:
-            students = json.load(f)
+
+        with open(
+            "students.json",
+            "r"
+        ) as file:
+            students = json.load(file)
+        print(
+            f"{len(students)} Students Loaded."
+        )
+
     except FileNotFoundError:
         students = []
+        print(
+            "No Previous Data Found."
+        )
+    except json.JSONDecodeError:
+        students = []
+
+        print(
+            "JSON File Corrupted."
+        )
 
 
 def save_data():
