@@ -121,8 +121,6 @@ def add_student():
     save_data()
     print("Student Added Successfully!")
 
-
-
 def view_students():
     if not students:
         print("No students found.")
@@ -146,8 +144,6 @@ def view_students():
         )
 
     print("-" * 80)
-
-
 
 def search_student():
     keyword = input("Enter Name/Roll No: ")
@@ -180,8 +176,6 @@ def search_student():
         print("-" * 80)
     else:
         print("Student Not Found!")
-
-
 
 def update_student():
     global update_count
@@ -265,7 +259,6 @@ def calculate_grade(marks):
 def load_data():
     global students
     try:
-
         with open(
             "students.json",
             "r"
@@ -286,7 +279,6 @@ def load_data():
         print(
             "JSON File Corrupted."
         )
-
 
 def save_data():
     with open('students.json', 'w') as f:
@@ -341,7 +333,6 @@ def export_csv():
         "CSV Exported Successfully."
     )
 
-
 def import_backup():
 
     global students
@@ -366,9 +357,7 @@ def import_backup():
         print(
             "Backup File Not Found."
         )
-
     except json.JSONDecodeError:
-
         print(
             "Backup File Corrupted."
         )
@@ -413,7 +402,6 @@ def create_auto_backup():
         )
 
 def display_last_backup_time():
-
     try:
 
         timestamp = os.path.getmtime(
@@ -571,6 +559,5 @@ while True:
         print("Thank you for using the Student Management System.")
         break
     
-
     else:
         print("Invalid Choice!")
