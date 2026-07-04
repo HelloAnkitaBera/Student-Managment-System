@@ -1,4 +1,4 @@
-# main.py
+
 import utils
 
 print(utils.__file__)
@@ -6,7 +6,7 @@ print(dir(utils))
 import python.storage as storage
 import importlib
 
-# Import storage module once and resolve optional symbols with safe fallbacks.
+
 storage = importlib.import_module('storage')
 
 load_data = getattr(storage, 'load_data')

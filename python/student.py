@@ -88,7 +88,7 @@ def view_students():
 
 
 def search_student():
-    """Search by roll number or name."""
+
 
     keyword = input("Enter Name/Roll Number: ").strip()
 
@@ -135,7 +135,7 @@ def search_student():
 
 
 def update_student():
-    """Update student information."""
+
 
     roll = get_valid_int("Enter Roll Number to Update: ")
 
@@ -249,7 +249,7 @@ def delete_student():
 
 
 def student_exists(roll):
-    """Return True if roll exists."""
+
 
     for student in students:
         if student["roll"] == roll:
