@@ -72,6 +72,14 @@
         "gender": "Female",
         "marks": 95.0,
         "created_at": "2026-06-25 00:17:04"
+    },
+    {
+        "roll": 11,
+        "name": "Rabin",
+        "age": 20,
+        "class": "2nd Year",
+        "gender": "Male",
+        "marks": 87.0,
+        "created_at": "2026-07-04 20:37:14"
     }
-
 ]
