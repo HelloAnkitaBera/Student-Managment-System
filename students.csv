@@ -1,11 +1,12 @@
-Roll,Name,Age,Class,Gender,Marks,Created At
-10,Swapnali,24,3rd Year,Female,99.0,2026-07-04 12:39:06
-2,Ranit,21,12,Male,89.0,
-3,Anu,20,10,Female,93.0,
-4,Ankita,20,12,Female,89.0,
-6,Lisa,22,12,Female,94.0,
-7,Prabir,21,12,Male,93.0,
-5,Priya,21,12,Female,86.0,
-8,Prantik,23,1st year,Male,98.0,
-9,Papiya Dey,23,2nd year,Female,95.0,2026-06-25 00:17:04
-11,Rabin,20,2nd Year,Male,87.0,2026-07-04 20:37:14
+Roll,Name,Age,Class,Gender,Marks
+10,Swapnali,24,3rd Year,Female,99.0
+2,Ranit,21,12,Male,89.0
+3,Anu,20,10,Female,93.0
+4,Ankita,20,12,Female,89.0
+6,Lisa,22,12,Female,94.0
+7,Prabir,21,12,Male,93.0
+5,Priya,21,12,Female,86.0
+8,Prantik,23,1st year,Male,98.0
+9,Papiya Dey,23,2nd year,Female,95.0
+11,Rabin,20,2nd Year,Male,87.0
+14,Hiya,21,2nd Year,Female,97.0
