@@ -1,16 +1,26 @@
 def get_valid_name():
+
     while True:
-        name = input("Enter Name: ").strip()
 
-        if not name:
-            print("Name cannot be empty!")
-            continue
+        name = input(
+            "Enter Name: "
+        ).strip()
 
-        if any(char.isdigit() for char in name):
-            print("Name cannot contain digits!")
-            continue
+        if name == "":
+            print(
+                "Name cannot be empty."
+            )
 
-        return name
+        elif not all(
+            c.isalpha() or c.isspace()
+            for c in name
+        ):
+            print(
+                "Invalid Name."
+            )
+
+        else:
+            return name
 
 
 def get_valid_roll():
